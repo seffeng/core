@@ -4,7 +4,7 @@
  * @description: global.config
  * @file: g.c.php
  * @charset: UTF-8
- * @create: 2014-10-09
+ * @create: 2014-10-10
  * @version 1.0
 **/
 
