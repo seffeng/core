@@ -16,7 +16,7 @@ define('CORE_INC',          CORE_ROOT.'inc/');
 define('CORE_MOD',          CORE_ROOT.'mod/');
 header('Content-Type: text/html; charset=UTF-8');
 include_once(CORE_INC.'c.p.php');
-include_once(CORE_INC.'c.d.php');
 include_once(CORE_INC.'f.g.php');
+include_once(CORE_INC.'c.d.php');
 include_once(CORE_INC.'f.a.php');
 ?>

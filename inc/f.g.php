@@ -1072,7 +1072,7 @@ function get_url_info($url, $set_info_zdy=array(), $prame=array()){
         $ischunked = FALSE;
         $head_i = 0;
         $head_info = '';                        //接收到的头信息
-        $max_count = 3;                     //允许重复读取次数
+        $max_count = 3;                         //允许重复读取次数
         stream_set_timeout($fsocktp, $set_info['IS_TIMEOUT']);      //设置超时时间
         $fgets = 'fgets';
         while(!$content = $fgets($fsocktp)){    //读取失败
