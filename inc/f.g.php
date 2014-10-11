@@ -103,6 +103,19 @@ function is_include($include_file){
 }
 
 /**
+ * @name: is_foreach
+ * @description: 检测是否允许foreach
+ * @param: mixed 需要判断变量
+ * @return: boolean
+ * @create: 2014-10-09
+**/
+function is_foreach($var_name){
+    if(is_array($var_name) && count($var_name) > 0) return TRUE;
+    if(is_object($var_name)) return TRUE;
+    return FALSE;
+}
+
+/**
  * @name: get_cur_time
  * @description: 获取当前时间
  * @param: boolean 返回是否字符串[FALSE]
