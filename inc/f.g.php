@@ -77,7 +77,7 @@ function is_exists($var_name, $var_type='var', $object=NULL){
     switch(strtolower(trim($var_type))){
         case 'var'      : {$return = isset($var_name) ? TRUE : FALSE; break;}
         case 'file'     : {$return = file_exists($var_name) ? TRUE : FALSE; break;}
-        case 'function' : {$return = function_exists($val_name) ? TRUE : FALSE; break;}
+        case 'function' : {$return = function_exists($var_name) ? TRUE : FALSE; break;}
         case 'class'    : {$return = class_exists($var_name) ? TRUE : FALSE; break;}
         case 'interface': {$return = interface_exists($var_name) ? TRUE : FALSE; break;}
         case 'method'   : {$return = method_exists($object, $var_name) ? TRUE : FALSE; break;}
