@@ -117,8 +117,8 @@ class cls_sess extends cls_mod{
     }
 
     /**
-     * @name: get_session_id
-     * @description: 获取当前SESSION_ID
+     * @name: get
+     * @description: 获取SESSION值
      * @scope: public
      * @param: string SESSION的KEY
      * @return: mixed
@@ -133,8 +133,8 @@ class cls_sess extends cls_mod{
     }
 
     /**
-     * @name: get_session_id
-     * @description: 获取当前SESSION_ID
+     * @name: set
+     * @description: 设置SESSION值
      * @scope: public
      * @param: string SESSION的KEY
      * @param: mixed SESSION的VAL
@@ -146,8 +146,8 @@ class cls_sess extends cls_mod{
     }
 
     /**
-     * @name: get_session_id
-     * @description: 获取当前SESSION_ID
+     * @name: del
+     * @description: 删除SESSION值
      * @scope: public
      * @param: string SESSION的KEY
      * @return: void
