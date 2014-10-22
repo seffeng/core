@@ -575,7 +575,7 @@ function get_array_sum($array){
 **/
 function xml_array($xml_string, $attribute=FALSE){
     $return = array();
-    $search = $attribute ? '|<((\S+)(.*))\s*>(.*)</\2>|Ums' : '|<((\S+)()).*>(.*)</\2>|Ums';
+    $search = $attribute ? '|<((\S+)(.*))\s*>(.*)</\1>|Ums' : '|<((\S+)().*)>(.*)</\1>|Ums';
     $xml_string = preg_replace_callback('|>\s*<|', function($match){return ">\n<";}, $xml_string);
     $xml_string = preg_replace_callback('|<\?.*\?>|', function($match){return '';}, $xml_string);
     $xml_string = preg_replace_callback('|<(\S+?)(.*)/>|U', function($match){return '<'.$match[1].$match[2].'></'.$match[1].'>';}, $xml_string);
