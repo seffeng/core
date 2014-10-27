@@ -1221,7 +1221,7 @@ function check_data($string, $type='email'){
         case 'email'        : {$return = preg_match("/^(\w+[-+.]*\w+)*@(\w+([-.]*\w+)*\.\w+([-.]*\w+)*)$/", $string); break;}
         case 'http'         : {$return = preg_match("/^http:\/\/[A-Za-z0-9-]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"])*$/", $string); break;}
         case 'qq'           : {$return = preg_match("/^[1-9]\d{4,11}$/", $string); break;}
-        case 'post'         : {$return = preg_match("/^[1-9]\d{5}$/", $string); break;}
+        case 'port'         : {$return = preg_match("/^[1-9]\d{5}$/", $string); break;}
         case 'idnum'        : {$return = preg_match("/^\d{15}(\d{2}[A-Za-z0-9])?$/", $string); break;}
         case 'china'        : {$return = preg_match("/^[".chr(0xa1)."-".chr(0xff)."]+$/", $string); break;} //GBK中文
         case 'english'      : {$return = preg_match("/^[A-Za-z]+$/", $string); break;}
