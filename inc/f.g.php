@@ -1250,4 +1250,29 @@ function check_data($string, $type='email'){
     gettype($return) == 'integer' && $return = $return == 0 ? FALSE : TRUE;
     return $return;
 }
+
+/**
+ * @name: time_string
+ * @description: 秒数转时间，格式[1年1月1日1时1分1秒]
+ * @param: integer 秒数
+ * @return: string
+ * @create: 2014-11-11
+**/
+function time_string($sec_time){
+    $tmp_array = array('年', '月', '周', '日', '时', '分', '秒');
+    $time_array = array(31536000, 2628000, 604800, 86400, 3600, 60, 1);
+    $return = '';
+    $sec_time = intval($sec_time);
+    if($sec_time == 0) return $return;
+    if($sec_time < 0) $sec_time = abs($sec_time);
+    foreach($time_array as $key => $val){
+        if($sec_time >= $val){
+            $return .= floor($sec_time/$time_array[$key]).$tmp_array[$key];
+            $tmp = $sec_time % $time_array[$key];
+            if($tmp != 0) $return .= time_string($tmp);
+            break;
+        }
+    }
+    return $return;
+}
 ?>
