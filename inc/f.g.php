@@ -1253,13 +1253,13 @@ function check_data($string, $type='email'){
 
 /**
  * @name: time_string
- * @description: 秒数转时间，格式[1年1月1日1时1分1秒]
+ * @description: 秒数转时间，格式[1年1月1天1时1分1秒]
  * @param: integer 秒数
  * @return: string
  * @create: 2014-11-11
 **/
 function time_string($sec_time){
-    $tmp_array = array('年', '月', '周', '日', '时', '分', '秒');
+    $tmp_array = array('年', '月', '周', '天', '时', '分', '秒');
     $time_array = array(31536000, 2628000, 604800, 86400, 3600, 60, 1);
     $return = '';
     $sec_time = intval($sec_time);
