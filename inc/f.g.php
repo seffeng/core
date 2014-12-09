@@ -996,8 +996,8 @@ function get_url_info($url, $set_info_zdy=array(), $prame=array()){
         }
         $host = substr($host, 0, $posint);
     }
-    if(preg_match('/.*(\.中国|\.公司|\.网络)$/', $host) || preg_match("/[".chr(0xa1)."-".chr(0xff)."]+/", $host)){
-        $host = g('idna_convert') -> encode($host);
+    if(check_data($host, 'cndomain')){
+        $host = get_init('idna_convert') -> encode($host);
     }
     $to_url = $match[3];
     if($to_url == ''){                      //处理请求地址默认[/]
@@ -1243,7 +1243,7 @@ function check_data($string, $type='email'){
         case 'hostrecord'   : {$return = preg_match('/^[A-Z_a-z0-9][A-Za-z0-9-]+(\.[A-Za-z0-9-_]+)*$/', $string); break;} //正确的主机记录,english
         case 'cnhostrecord' : {$return = preg_match('/^[_a-zA-Z0-9]*([\x{4e00}-\x{9fa5}]*[-a-zA-Z0-9\.]*)+[a-zA-Z0-9_]$/iu', $string); break;} //正确的主机记录,english chinese
         case 'domain'       : {$return = preg_match('/^[A-Za-z0-9][A-Za-z0-9-]+(\.[A-Za-z0-9-]+){1,3}$/', $string); break;} //是否是域名
-        case 'cndomain'     : {$return = preg_match('/^([-a-zA-Z0-9\.]*[\x{4e00}-\x{9fa5}]*[-a-zA-Z0-9\.]*)+\.(中国|公司|网络|CN|COM|NET)$/iu', $string); break;} //是否中文域名
+        case 'cndomain'     : {$return = (preg_match('/[\x{4e00}-\x{9fa5}]+/u', $string) && preg_match('/^([-a-zA-Z0-9\.]*[\x{4e00}-\x{9fa5}]*[-a-zA-Z0-9\.]*)+\.(中国|公司|网络|CN|COM|NET)$/iu', $string)) ? TRUE : FALSE; break;}  //是否中文域名
         case 'mac'          : {$return = preg_match('/^[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}:[a-fA-F\d]{2}$/', $string); break;}
         case 'ipv6'         : {$return = preg_match('/^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/', $string); break;}
     }

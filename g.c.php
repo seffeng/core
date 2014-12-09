@@ -20,4 +20,5 @@ include_once(CORE_INC.'f.g.php');
 include_once(CORE_INC.'c.d.php');
 include_once(CORE_INC.'f.a.php');
 include_once(CORE_INC.'cls_mod.php');
+set_init(CORE_INC);
 ?>
