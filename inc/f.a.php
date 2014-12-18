@@ -111,4 +111,134 @@ function debug($er_string, $er_type=NULL, $er_key=NULL, $is_exit=FALSE){
     get_mod('log') -> write_string($er_string, $er_type, $er_key);
     if($is_exit) exit;
 }
+
+/**
+ * @name: get_psize
+ * @description: 获取分页列表每页显示记录数量
+ * @param: integer 当前设定每页
+ * @return: array
+**/
+function get_psize($size){
+    $s_allow = array(15, 30, 60, 99);
+    $r_allow = array();
+    foreach($s_allow as $val) $r_allow[$val] = 0;
+    if(in_array($size, $s_allow)){
+        $r_allow[$size] = 1;
+        return array('s' => $size, 'l' => $r_allow);
+    }
+    if($size < $s_allow[0]){
+        $r_allow[$s_allow[0]] = 1;
+        return array('s' => $s_allow[0], 'l' => $r_allow);
+    }
+    $s_allow_leng = count($s_allow);
+    if($size > $s_allow[$s_allow_leng-1]){
+        $r_allow[$s_allow[$s_allow_leng-1]] = 1;
+        return array('s' => $s_allow[$s_allow_leng-1], 'l' => $r_allow);
+    }
+    foreach($s_allow as $key => $val){
+        $min = $val;
+        $max_i = $key+1;
+        if($max_i < $s_allow_leng){
+            $max = $s_allow[$max_i];
+        }else{
+            $max = $min;
+        }
+        if($size <= $max && $size >= $min){
+            $r_allow[$min] = 1;
+            return array('s' => $min, 'l' => $r_allow);
+        }
+    }
+    $r_allow[$s_allow[0]] = 1;
+    return array('s' => $s_allow[0], 'l' => $r_allow);
+}
+
+/**
+ * @name: get_page
+ * @description: 计算分页数据
+ * @param: integer 总记录数
+ * @param: integer 当前页数
+ * @param: integer 每页记录数
+ * @param: integer 显示的前后页数
+ * @param: array 其他数组数据
+ * @return: array
+**/
+function get_page($num, $pgcur=1, $size=15, $pnum=3, $array=array()){
+    $size = get_psize($size);
+    $psize = $size['s'];
+    $plist = $size['l'];
+    $pgmax = $num < $psize ? 1 : ceil($num/$psize);
+    $pgcur = min(max($pgcur, 1), $pgmax);
+    $select = $list = array();
+    while($pnum > 0){
+        $pgtmp = min(max($pgcur-$pnum, 1), $pgmax);
+        $list[$pgtmp] = 0;
+        $pgtmp = min(max($pgcur+$pnum, 1), $pgmax);
+        $list[$pgtmp] = 0;
+        --$pnum;
+    }
+    $list[$pgcur] = 1;
+    ksort($list, SORT_NUMERIC);
+    if($pgmax <= 60){   //下拉框
+        $pnum = $pgmax;
+        while($pnum > 0){
+            $select[$pnum] = 0;
+            --$pnum;
+        }
+    }else{
+        $last_min = 0;
+        $last_max = $pgmax;
+        $pnum = 9;
+        while($pnum > 0){   //当前页左右
+            $pgtmp = min(max($pgcur-$pnum, 1), $pgmax);
+            $select[$pgtmp] = 0;
+            $pgtmp = min(max($pgcur+$pnum, 1), $pgmax);
+            $select[$pgtmp] = 0;
+            --$pnum;
+        }
+        $pnum = 4;
+        while($pnum >= 0){  //最后和最前
+            $pgtmp = min(max($pgmax-$pnum, 1), $pgmax);
+            $select[$pgtmp] = 0;
+            $last_max = $pgtmp;
+            $pgtmp = min(max($pnum+1, 1), $pgmax);
+            $select[$pgtmp] = 0;
+            if($last_min < 1) $last_min = $pgtmp;
+            --$pnum;
+        }
+        $pnum = 4;
+        while($pnum >= 0){  //最后和最前双倍
+            $last_max -= 2;
+            $pgtmp = min(max($last_max, 1), $pgmax);
+            $select[$pgtmp] = 0;
+            $last_min += 2;
+            $pgtmp = min(max($last_min, 1), $pgmax);
+            $select[$pgtmp] = 0;
+            --$pnum;
+        }
+        $pnum = 10;
+        $curnum = ceil($pgmax/2);
+        while(count($select) < 60 && $pnum >= 0){   //中心点
+            $pgtmp = min(max($curnum+$pnum+rand(2, 6), 1), $pgmax);
+            $select[$pgtmp] = 0;
+            $pgtmp = min(max($curnum-$pnum-rand(2, 6), 1), $pgmax);
+            $select[$pgtmp] = 0;
+            --$pnum;
+        }
+    }
+    $select[$pgcur] = 1;
+    ksort($select, SORT_NUMERIC);
+    return array_merge($array, array(
+        'num'   => $num,
+        'psize' => $psize,
+        'pgcur' => $pgcur,
+        'pgmax' => $pgmax,
+        'first' => 1,
+        'prev'  => $pgcur <= 1 ? 0 : min(max($pgcur-1, 1), $pgmax),
+        'next'  => $pgcur >= $pgmax ? 0 : min(max($pgcur+1, 1), $pgmax),
+        'end'   => $pgmax,
+        'plist' => $plist,
+        'list'  => $list,
+        'select' => $select,
+    ));
+}
 ?>
