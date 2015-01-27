@@ -439,26 +439,26 @@ class cls_mysqli extends cls_mod{
      * @create: 2014-10-13
     **/
     public function get_table_name($table_name, $database_name=NULL, $is_dian=TRUE){
-    	$tmp_array = explode('.', trim($table_name));
-    	if(count($tmp_array) > 2){
-    		return FALSE;
-    	}else{
-    		if(isset($tmp_array[1])){
-    			$database_name = trim($tmp_array[0]);
-    			$table_name = trim($tmp_array[1]);
-    		}else{
-    			if(is_empty($database_name)) $database_name = $this -> get_dbname();
-    		}
-    	}
-    	if(is_empty($table_name)) return FALSE;
-    	$table_prefix = $this -> get_table_prefix();
-    	$table_name = $table_prefix.$table_name;
-    	if($is_dian){
-    	    $return = ($database_name === FALSE || is_empty($database_name)) ? '`'.$table_name.'`' : '`'.$database_name.'`.`'.$table_name.'`';
-    	}else{
-    	    $return = ($database_name === FALSE || is_empty($database_name)) ? $table_name : $database_name.'.'.$table_name;
-    	}
-    	return $return;
+        $tmp_array = explode('.', trim($table_name));
+        if(count($tmp_array) > 2){
+            return FALSE;
+        }else{
+            if(isset($tmp_array[1])){
+                $database_name = trim($tmp_array[0]);
+                $table_name = trim($tmp_array[1]);
+            }else{
+                if(is_empty($database_name)) $database_name = $this -> get_dbname();
+            }
+        }
+        if(is_empty($table_name)) return FALSE;
+        $table_prefix = $this -> get_table_prefix();
+        $table_name = $table_prefix.$table_name;
+        if($is_dian){
+            $return = ($database_name === FALSE || is_empty($database_name)) ? '`'.$table_name.'`' : '`'.$database_name.'`.`'.$table_name.'`';
+        }else{
+            $return = ($database_name === FALSE || is_empty($database_name)) ? $table_name : $database_name.'.'.$table_name;
+        }
+        return $return;
     }
 
     /**
