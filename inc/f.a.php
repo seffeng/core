@@ -241,4 +241,31 @@ function get_page($num, $pgcur=1, $size=15, $pnum=3, $array=array()){
         'select' => $select,
     ));
 }
+
+/**
+ * @name: substr_name
+ * @description: 截取字符串
+ * @param: string 字符串
+ * @param: integer 整型
+ * @return: string
+**/
+function substr_name($name = NULL, $length = NULL){
+    $contact_name = trim($name);
+    if(strlen($contact_name) <= $length){
+        return $contact_name;
+    }else{
+        $return = '';
+        $i = 0;
+        for(;$i < $length; $i++){
+            $tmp_string = substr($contact_name, $i, 1);
+            if(ord($tmp_string) > 0xA0){    /* UTF-8中文字符占三个字节 */
+                $return .= substr($contact_name, $i, 3);
+                $i += 2;
+            }else{
+                $return .= $tmp_string;
+            }
+        }
+        return $return.'...';
+    }
+}
 ?>
