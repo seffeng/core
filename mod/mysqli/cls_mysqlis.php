@@ -250,13 +250,13 @@ class cls_mysqlis{
         }
         if(is_type($result, 'integer')){
             switch(intval($result)){
-                case 1 : {$result = MYSQL_ASSOC;break;}
-                case 2 : {$result = MYSQL_NUM;break;}
-                default : {$result = MYSQL_BOTH;}
+                case 1 : {$result = MYSQLI_ASSOC;break;}
+                case 2 : {$result = MYSQLI_NUM;break;}
+                default : {$result = MYSQLI_BOTH;}
             }
         }else{
             $return_value = $result;
-            $result = MYSQL_BOTH;
+            $result = MYSQLI_BOTH;
         }
         $return = mysqli_fetch_array($resource, $result);
         if(isset($return_value) && !is_empty($return_value)){
@@ -288,13 +288,13 @@ class cls_mysqlis{
         $return = array();
         if(is_type($result, 'integer')){
             switch(intval($result)){
-                case 1 : {$result = MYSQL_ASSOC;break;}
-                case 2 : {$result = MYSQL_NUM;break;}
-                default : {$result = MYSQL_BOTH;}
+                case 1 : {$result = MYSQLI_ASSOC;break;}
+                case 2 : {$result = MYSQLI_NUM;break;}
+                default : {$result = MYSQLI_BOTH;}
             }
         }else{
             $return_value = $result;
-            $result = MYSQL_BOTH;
+            $result = MYSQLI_BOTH;
         }
         while($array = mysqli_fetch_array($resource, $result)){
             $return[] = $array;
